@@ -1,7 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:mock_plant_care_app/ui/pages/home_page.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await AwesomeNotifications()
+      .initialize('resource://drawable/res_notification_app_icon', [
+        NotificationChannel(
+          channelKey: 'basic_channel',
+          channelName: 'Basic notifications',
+          channelDescription: 'Notification channel for basic tests',
+          defaultColor: Colors.teal,
+          importance: NotificationImportance.High,
+          enableVibration: true,
+          channelShowBadge: true,
+        ),
+        NotificationChannel(
+          channelKey: 'scheduled_channel',
+          channelName: 'Scheduled notifications',
+          channelDescription: 'Notification channel for scheduled tests',
+          defaultColor: Colors.teal,
+          importance: NotificationImportance.High,
+          enableVibration: true,
+          channelShowBadge: true,
+        ),
+      ]);
   runApp(AppWidget());
 }
 
@@ -12,7 +35,13 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primaryColor: Colors.teal),
+      theme: ThemeData(
+        primaryColor: Colors.teal,
+        appBarTheme: AppBarTheme(backgroundColor: Colors.teal[500]),
+        textTheme: TextTheme(
+          bodyMedium: TextStyle(color: Colors.teal[50], fontSize: 20),
+        ),
+      ),
       title: 'My Plant',
       home: HomePage(),
     );

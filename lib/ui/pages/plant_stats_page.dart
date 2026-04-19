@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mock_plant_care_app/widgets/widgets.dart';
+import 'package:mock_plant_care_app/ui/widgets/app_tile.dart';
+import 'package:mock_plant_care_app/ui/widgets/plant_image.dart';
+import 'package:mock_plant_care_app/ui/widgets/plant_stats.dart';
 
 class PlantStatsPage extends StatelessWidget {
   const PlantStatsPage({super.key});
@@ -19,7 +21,7 @@ class PlantStatsPage extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               SizedBox(height: 45),
-              PlantImage(),
+              plantImage(),
               SizedBox(height: 25),
               PlantStats(),
             ],
