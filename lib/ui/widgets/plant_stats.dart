@@ -12,7 +12,7 @@ class AppBarTitle extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        FaIcon(FontAwesomeIcons.seedling, color: Colors.teal[50]),
+        FaIcon(FontAwesomeIcons.pagelines, color: Colors.teal[50]),
         const Text('GreenThumbs'),
       ],
     );
