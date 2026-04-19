@@ -12,10 +12,13 @@ void main() async {
         NotificationChannel(
           channelKey: 'basic_channel',
           channelName: 'Basic notifications',
+
           channelDescription: 'Notification channel for basic tests',
           defaultColor: Colors.teal,
-          importance: NotificationImportance.High,
+          importance: NotificationImportance.Max,
           enableVibration: true,
+          playSound: true,
+          soundSource: 'resource://raw/res_custom_notification',
           channelShowBadge: true,
         ),
         NotificationChannel(
