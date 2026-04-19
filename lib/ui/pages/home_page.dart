@@ -2,7 +2,10 @@
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:mock_plant_care_app/core/notfications/notfication_controler.dart';
 import 'package:mock_plant_care_app/core/notfications/notifications.dart';
+import 'package:mock_plant_care_app/ui/pages/plant_stats_page.dart';
+import 'package:mock_plant_care_app/ui/widgets/app_tile.dart';
 import 'package:mock_plant_care_app/ui/widgets/home_page_buttons.dart';
 import 'package:mock_plant_care_app/ui/widgets/notfication_handler.dart';
 import 'package:mock_plant_care_app/ui/widgets/plant_image.dart';
@@ -18,11 +21,23 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-
-    // Use the WidgetsBinding to ensure the context is ready before showing a dialog
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _checkNotificationPermission();
     });
+    AwesomeNotifications().setListeners(
+      onNotificationCreatedMethod:
+          NotificationController.onNotificationCreatedMethod,
+      onActionReceivedMethod: NotificationController.onActionReceivedMethod,
+      onNotificationDisplayedMethod:
+          NotificationController.onNotificationDisplayedMethod,
+      onDismissActionReceivedMethod:
+          NotificationController.onDismissActionReceivedMethod,
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   void _checkNotificationPermission() {
@@ -39,7 +54,19 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("My Plant", style: TextTheme.of(context).bodyMedium),
+
+        title: AppBarTitle(),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => PlantStatsPage()),
+              );
+            },
+            icon: Icon(Icons.insert_chart_outlined_rounded, size: 30),
+          ),
+        ],
       ),
       body: Center(
         child: Column(

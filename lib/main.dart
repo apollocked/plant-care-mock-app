@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mock_plant_care_app/ui/pages/home_page.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 
+final GlobalKey<ScaffoldMessengerState> snackbarKey =
+    GlobalKey<ScaffoldMessengerState>();
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AwesomeNotifications()
@@ -25,6 +28,8 @@ void main() async {
           channelShowBadge: true,
         ),
       ]);
+  // Define this globally
+
   runApp(AppWidget());
 }
 
@@ -34,6 +39,8 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
+      scaffoldMessengerKey: snackbarKey,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.teal,
