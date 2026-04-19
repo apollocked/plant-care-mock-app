@@ -1,42 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:mock_plant_care_app/ui/pages/home_page.dart';
-import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:mock_plant_care_app/core/services/notification_service.dart';
+import 'package:mock_plant_care_app/core/services/storage_service.dart';
+import 'package:mock_plant_care_app/core/theme/app_theme.dart';
+import 'package:mock_plant_care_app/viewmodels/plant_viewmodel.dart';
+import 'package:mock_plant_care_app/viewmodels/theme_viewmodel.dart';
+import 'package:mock_plant_care_app/views/pages/home_page.dart';
+import 'package:provider/provider.dart';
 
 final GlobalKey<ScaffoldMessengerState> snackbarKey =
     GlobalKey<ScaffoldMessengerState>();
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await AwesomeNotifications()
-      .initialize('resource://drawable/res_notification_app_icon', [
-        NotificationChannel(
-          channelKey: 'basic_channel',
-          channelName: 'Basic notifications',
 
-          channelDescription: 'Notification channel for basic tests',
-          defaultColor: Colors.teal,
-          importance: NotificationImportance.Max,
-          enableVibration: true,
-          playSound: true,
-          soundSource: 'resource://raw/res_custom_notification',
-          channelShowBadge: true,
-        ),
-        NotificationChannel(
-          channelKey: 'scheduled_channel',
-          channelName: 'Scheduled notifications',
-          channelDescription: 'Notification channel for scheduled tests',
-          defaultColor: Colors.teal,
-          importance: NotificationImportance.Max,
-          locked: true,
-          enableVibration: true,
-          playSound: true,
-          channelShowBadge: true,
-          soundSource: 'resource://raw/res_custom_notification',
-        ),
-      ]);
-  // Define this globally
+  final StorageService storageService = StorageService();
+  final NotificationService notificationService = NotificationService();
+  await storageService.init();
+  await notificationService.initialize();
+  await notificationService.ensurePermission();
 
-  runApp(AppWidget());
+  final PlantViewModel plantViewModel = PlantViewModel(
+    storageService,
+    notificationService,
+  );
+  final ThemeViewModel themeViewModel = ThemeViewModel(storageService);
+  await plantViewModel.loadPlants();
+  await themeViewModel.loadThemeMode();
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<PlantViewModel>.value(value: plantViewModel),
+        ChangeNotifierProvider<ThemeViewModel>.value(value: themeViewModel),
+      ],
+      child: const AppWidget(),
+    ),
+  );
 }
 
 class AppWidget extends StatelessWidget {
@@ -44,19 +44,19 @@ class AppWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: navigatorKey,
-      scaffoldMessengerKey: snackbarKey,
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: Colors.teal,
-        appBarTheme: AppBarTheme(backgroundColor: Colors.teal[500]),
-        textTheme: TextTheme(
-          bodyMedium: TextStyle(color: Colors.teal[50], fontSize: 20),
-        ),
-      ),
-      title: 'My Plant',
-      home: HomePage(),
+    return Consumer<ThemeViewModel>(
+      builder: (BuildContext context, ThemeViewModel themeVm, _) {
+        return MaterialApp(
+          navigatorKey: navigatorKey,
+          scaffoldMessengerKey: snackbarKey,
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: themeVm.themeMode,
+          title: 'My Plant',
+          home: const HomePage(),
+        );
+      },
     );
   }
 }
