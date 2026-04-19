@@ -18,7 +18,6 @@ void main() async {
   final NotificationService notificationService = NotificationService();
   await storageService.init();
   await notificationService.initialize();
-  await notificationService.ensurePermission();
 
   final PlantViewModel plantViewModel = PlantViewModel(
     storageService,

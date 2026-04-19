@@ -1,180 +1,180 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:mock_plant_care_app/model/plant_model.dart';
-import 'package:mock_plant_care_app/view/widgets/glass_container.dart';
+import 'package:mock_plant_care_app/view/widgets/details/action_bar.dart';
+import 'package:mock_plant_care_app/view/widgets/details/care_info_tab.dart';
+import 'package:mock_plant_care_app/view/widgets/details/plant_hero_card.dart';
+import 'package:mock_plant_care_app/view/widgets/details/schedule_tab.dart';
 import 'package:mock_plant_care_app/viewmodel/plant_viewmodel.dart';
 import 'package:provider/provider.dart';
 
-class PlantDetailsPage extends StatelessWidget {
-  const PlantDetailsPage({super.key, required this.plantId});
 
+class PlantDetailsPage extends StatefulWidget {
+  const PlantDetailsPage({super.key, required this.plantId});
   final String plantId;
 
   @override
-  Widget build(BuildContext context) {
-    return Consumer<PlantViewModel>(
-      builder: (BuildContext context, PlantViewModel vm, _) {
-        final PlantModel? plant = vm.getPlantById(plantId);
-        if (plant == null) {
-          return Scaffold(
-            appBar: AppBar(title: const Text('Plant Details')),
-            body: const Center(child: Text('Plant not found')),
-          );
-        }
-
-        return Scaffold(
-          extendBodyBehindAppBar: true,
-          appBar: AppBar(
-            title: Text(plant.name),
-            actions: <Widget>[
-              IconButton(
-                icon: const Icon(Icons.delete_outline),
-                onPressed: () async {
-                  await vm.deletePlant(plant.id);
-                  if (context.mounted) {
-                    Navigator.pop(context);
-                  }
-                },
-              ),
-            ],
-          ),
-          body: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: <Color>[
-                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.16),
-                  Theme.of(context).scaffoldBackgroundColor,
-                ],
-              ),
-            ),
-            child: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    GlassContainer(
-                      borderRadius: 16,
-                      padding: const EdgeInsets.all(14),
-                      child: Row(
-                        children: <Widget>[
-                          const CircleAvatar(
-                            radius: 24,
-                            child: Icon(Icons.energy_savings_leaf_outlined),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  plant.species == null ||
-                                          plant.species!.isEmpty
-                                      ? 'No species set'
-                                      : plant.species!,
-                                  style: Theme.of(
-                                    context,
-                                  ).textTheme.titleMedium,
-                                ),
-                                Text(
-                                  'Daily reminders: ${plant.remindersEnabled ? 'On' : 'Off'}',
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 18),
-                    GlassContainer(
-                      borderRadius: 16,
-                      padding: const EdgeInsets.all(14),
-                      child: Column(
-                        children: <Widget>[
-                          _InfoRow(
-                            title: 'Water due',
-                            value: DateFormat.yMMMd().add_jm().format(
-                              plant.nextWaterDue,
-                            ),
-                          ),
-                          _InfoRow(
-                            title: 'Food due',
-                            value: DateFormat.yMMMd().add_jm().format(
-                              plant.nextFoodDue,
-                            ),
-                          ),
-                          _InfoRow(
-                            title: 'Needs water now',
-                            value: plant.needsWaterNow ? 'Yes' : 'No',
-                          ),
-                          _InfoRow(
-                            title: 'Needs food now',
-                            value: plant.needsFoodNow ? 'Yes' : 'No',
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Spacer(),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: GlassContainer(
-                            borderRadius: 14,
-                            child: ElevatedButton.icon(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.transparent,
-                                elevation: 0,
-                              ),
-                              onPressed: () => vm.markPlantWatered(plant.id),
-                              icon: const Icon(Icons.water_drop_outlined),
-                              label: const Text('Watered Now'),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: GlassContainer(
-                            borderRadius: 14,
-                            child: ElevatedButton.icon(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.transparent,
-                                elevation: 0,
-                              ),
-                              onPressed: () => vm.markPlantFed(plant.id),
-                              icon: const Icon(Icons.local_florist_outlined),
-                              label: const Text('Fed Now'),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
+  State<PlantDetailsPage> createState() => _PlantDetailsPageState();
 }
 
-class _InfoRow extends StatelessWidget {
-  const _InfoRow({required this.title, required this.value});
+class _PlantDetailsPageState extends State<PlantDetailsPage>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
 
-  final String title;
-  final String value;
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final PlantViewModel vm = context.watch<PlantViewModel>();
+    final PlantModel? plant = vm.getPlantById(widget.plantId);
+
+    if (plant == null) {
+      return Scaffold(
+        appBar: AppBar(title: const Text('Plant Details')),
+        body: const Center(child: Text('Plant not found')),
+      );
+    }
+
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+    final ColorScheme scheme = Theme.of(context).colorScheme;
+    final Color onSurface = scheme.onSurface;
+
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: _buildAppBar(context, plant, vm, isDark, onSurface),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            stops: const <double>[0.0, 0.4, 1.0],
+            colors: <Color>[
+              scheme.primary.withValues(alpha: isDark ? 0.25 : 0.18),
+              scheme.primary.withValues(alpha: isDark ? 0.08 : 0.05),
+              Theme.of(context).scaffoldBackgroundColor,
+            ],
+          ),
+        ),
+        child: SafeArea(
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+                child: PlantHeroCard(plant: plant),
+              ),
+              const SizedBox(height: 16),
+              _buildTabBar(context, scheme, isDark, onSurface),
+              const SizedBox(height: 12),
+              Expanded(
+                child: TabBarView(
+                  controller: _tabController,
+                  children: <Widget>[
+                    CareInfoTab(plant: plant),
+                    ScheduleTab(plant: plant, vm: vm),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: DetailsActionBar(plant: plant, vm: vm, isDark: isDark),
+    );
+  }
+
+  PreferredSizeWidget _buildAppBar(BuildContext context, PlantModel plant, PlantViewModel vm, bool isDark, Color onSurface) {
+    return AppBar(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      iconTheme: IconThemeData(color: onSurface),
+      title: Text(plant.name, style: TextStyle(color: onSurface, fontWeight: FontWeight.w700, fontSize: 18)),
+      actions: <Widget>[
+        GestureDetector(
+          onTap: () => _confirmDelete(context, plant, vm),
+          child: Container(
+            margin: const EdgeInsets.only(right: 16),
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.red.withValues(alpha: isDark ? 0.15 : 0.08)),
+            child: Icon(Icons.delete_outline_rounded, size: 20, color: Colors.red.shade400),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTabBar(BuildContext context, ColorScheme scheme, bool isDark, Color onSurface) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[Text(title), Text(value)],
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Container(
+          padding: const EdgeInsets.all(6),
+          height: 54,
+          color: isDark ? Colors.white.withValues(alpha: 0.08) : Colors.white.withValues(alpha: 0.6),
+          child: TabBar(
+            controller: _tabController,
+            dividerColor: Colors.transparent,
+            indicatorSize: TabBarIndicatorSize.tab,
+            indicator: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              gradient: LinearGradient(
+                colors: <Color>[
+                  scheme.primary,
+                  Color.lerp(scheme.primary, Colors.teal, 0.45)!,
+                ],
+              ),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  color: scheme.primary.withValues(alpha: 0.35),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            labelColor: Colors.white,
+            unselectedLabelColor: onSurface.withValues(alpha: 0.45),
+            labelStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
+            unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+            tabs: const <Tab>[
+              Tab(text: '🌿 Care Info'),
+              Tab(text: '📋 Schedule'),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _confirmDelete(BuildContext context, PlantModel plant, PlantViewModel vm) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: const Text('Remove Plant', style: TextStyle(fontWeight: FontWeight.w700)),
+        content: Text('Remove "${plant.name}" from your garden?'),
+        actions: <Widget>[
+          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+            onPressed: () async {
+              Navigator.pop(ctx);
+              await vm.deletePlant(plant.id);
+              if (context.mounted) Navigator.pop(context);
+            },
+            child: const Text('Remove'),
+          ),
+        ],
       ),
     );
   }
 }
+
