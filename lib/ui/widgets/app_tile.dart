@@ -11,7 +11,8 @@ class AppBarTitle extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         FaIcon(FontAwesomeIcons.pagelines, color: Colors.teal[50]),
-        const Text('My Plant', style: TextStyle(color: Colors.teal)),
+        const SizedBox(width: 10),
+        const Text('My Plant', style: TextStyle(color: Colors.white)),
       ],
     );
   }

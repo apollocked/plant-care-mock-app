@@ -23,9 +23,12 @@ void main() async {
           channelName: 'Scheduled notifications',
           channelDescription: 'Notification channel for scheduled tests',
           defaultColor: Colors.teal,
-          importance: NotificationImportance.High,
+          importance: NotificationImportance.Max,
+          locked: true,
           enableVibration: true,
+          playSound: true,
           channelShowBadge: true,
+          soundSource: 'resource://raw/res_custom_notification',
         ),
       ]);
   // Define this globally

@@ -4,6 +4,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:mock_plant_care_app/core/notfications/notfication_controler.dart';
 import 'package:mock_plant_care_app/core/notfications/notifications.dart';
+import 'package:mock_plant_care_app/core/utils/utilities.dart';
 import 'package:mock_plant_care_app/ui/pages/plant_stats_page.dart';
 import 'package:mock_plant_care_app/ui/widgets/app_tile.dart';
 import 'package:mock_plant_care_app/ui/widgets/home_page_buttons.dart';
@@ -64,7 +65,11 @@ class _HomePageState extends State<HomePage> {
                 MaterialPageRoute(builder: (_) => PlantStatsPage()),
               );
             },
-            icon: Icon(Icons.insert_chart_outlined_rounded, size: 30),
+            icon: Icon(
+              Icons.insert_chart_outlined_rounded,
+              size: 30,
+              color: Colors.white,
+            ),
           ),
         ],
       ),
@@ -77,10 +82,17 @@ class _HomePageState extends State<HomePage> {
             HomePageButtons(
               onPressedOne: createPlantFoodNotification,
               onPressedTwo: () async {
-                return null;
+                // Corrected variable name and syntax
+                NotificationWeekAndTime? pickedSchedule = await pickSchedule(
+                  context,
+                );
+
+                if (pickedSchedule != null) {
+                  await createWaterReminderNotification(pickedSchedule);
+                }
               },
               onPressedThree: () async {
-                return null;
+                await cancelScheduledNotifications();
               },
             ),
           ],
