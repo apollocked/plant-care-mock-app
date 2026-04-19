@@ -2,8 +2,8 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:mock_plant_care_app/model/plant_model.dart';
 import 'package:mock_plant_care_app/core/notifications/notification_controller.dart';
-import 'package:mock_plant_care_app/view/pages/add_plant_page.dart';
 import 'package:mock_plant_care_app/view/pages/plant_details_page.dart';
+import 'package:mock_plant_care_app/view/widgets/home/add_plant_fab.dart';
 import 'package:mock_plant_care_app/view/widgets/home/empty_state.dart';
 import 'package:mock_plant_care_app/view/widgets/home/hero_banner.dart';
 import 'package:mock_plant_care_app/view/widgets/home/home_header.dart';
@@ -153,50 +153,8 @@ class _HomePageState extends State<HomePage>
           ),
         ),
       ),
-      floatingActionButton: ScaleTransition(
-        scale: CurvedAnimation(parent: _fabAnim, curve: Curves.elasticOut),
-        child: GestureDetector(
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const AddPlantPage()),
-          ),
-          child: Container(
-            height: 56,
-            padding: const EdgeInsets.symmetric(horizontal: 22),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(28),
-              gradient: LinearGradient(
-                colors: <Color>[
-                  scheme.primary,
-                  Color.lerp(scheme.primary, Colors.teal, 0.5)!,
-                ],
-              ),
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                  color: scheme.primary.withValues(alpha: 0.45),
-                  blurRadius: 20,
-                  offset: const Offset(0, 8),
-                ),
-              ],
-            ),
-            child: const Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Icon(Icons.add_rounded, color: Colors.white, size: 22),
-                SizedBox(width: 8),
-                Text(
-                  'Add Plant',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 15,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+      floatingActionButton: AddPlantFAB(animation: _fabAnim, scheme: scheme),
     );
   }
 }
+

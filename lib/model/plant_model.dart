@@ -45,8 +45,18 @@ class PlantModel {
   TimeOfDay get waterReminderTime =>
       TimeOfDay(hour: waterReminderHour, minute: waterReminderMinute);
 
+  set waterReminderTime(TimeOfDay time) {
+    waterReminderHour = time.hour;
+    waterReminderMinute = time.minute;
+  }
+
   TimeOfDay get feedReminderTime =>
       TimeOfDay(hour: feedReminderHour, minute: feedReminderMinute);
+
+  set feedReminderTime(TimeOfDay time) {
+    feedReminderHour = time.hour;
+    feedReminderMinute = time.minute;
+  }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
