@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:flutter/material.dart';
 
 class NotificationPermissionHandler {
   static void showPermissionDialog(BuildContext context) {
@@ -36,8 +36,6 @@ class NotificationPermissionHandler {
               style: TextStyle(color: Colors.black54),
             ),
             const SizedBox(height: 24),
-
-            // Allow Button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -58,8 +56,6 @@ class NotificationPermissionHandler {
                 ),
               ),
             ),
-
-            // Later Button
             TextButton(
               onPressed: () => Navigator.pop(context),
               child: const Text(

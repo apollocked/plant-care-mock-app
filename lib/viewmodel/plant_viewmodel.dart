@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mock_plant_care_app/core/models/plant_model.dart';
-import 'package:mock_plant_care_app/core/services/notification_service.dart';
-import 'package:mock_plant_care_app/core/services/storage_service.dart';
+import 'package:mock_plant_care_app/model/plant_model.dart';
+import 'package:mock_plant_care_app/services/notification_service.dart';
+import 'package:mock_plant_care_app/services/storage_service.dart';
 
 class PlantViewModel extends ChangeNotifier {
   PlantViewModel(this._storageService, this._notificationService);

@@ -1,4 +1,5 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
+
 const String basicChannelKey = 'basic_channel';
 const String scheduledChannelKey = 'scheduled_channel';
 

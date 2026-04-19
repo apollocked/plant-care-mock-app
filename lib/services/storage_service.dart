@@ -1,5 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:mock_plant_care_app/core/models/plant_model.dart';
+import 'package:mock_plant_care_app/model/plant_model.dart';
 
 class StorageService {
   static const String plantsBoxName = 'plants_box';

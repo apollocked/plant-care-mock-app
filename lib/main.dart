@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mock_plant_care_app/core/services/notification_service.dart';
-import 'package:mock_plant_care_app/core/services/storage_service.dart';
 import 'package:mock_plant_care_app/core/theme/app_theme.dart';
-import 'package:mock_plant_care_app/viewmodels/plant_viewmodel.dart';
-import 'package:mock_plant_care_app/viewmodels/theme_viewmodel.dart';
-import 'package:mock_plant_care_app/views/pages/home_page.dart';
+import 'package:mock_plant_care_app/services/notification_service.dart';
+import 'package:mock_plant_care_app/services/storage_service.dart';
+import 'package:mock_plant_care_app/view/pages/home_page.dart';
+import 'package:mock_plant_care_app/viewmodel/plant_viewmodel.dart';
+import 'package:mock_plant_care_app/viewmodel/theme_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 final GlobalKey<ScaffoldMessengerState> snackbarKey =
