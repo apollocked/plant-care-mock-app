@@ -32,13 +32,15 @@ class PlantModel {
   int feedReminderMinute;
   bool remindersEnabled;
 
-  bool get needsWaterNow =>
-      DateTime.now().isAfter(lastWateredAt.add(Duration(days: waterIntervalDays)));
+  bool get needsWaterNow => DateTime.now().isAfter(
+    lastWateredAt.add(Duration(days: waterIntervalDays)),
+  );
 
   bool get needsFoodNow =>
       DateTime.now().isAfter(lastFedAt.add(Duration(days: feedIntervalDays)));
 
-  DateTime get nextWaterDue => lastWateredAt.add(Duration(days: waterIntervalDays));
+  DateTime get nextWaterDue =>
+      lastWateredAt.add(Duration(days: waterIntervalDays));
 
   DateTime get nextFoodDue => lastFedAt.add(Duration(days: feedIntervalDays));
 

@@ -68,7 +68,9 @@ class EmptyPlantState extends StatelessWidget {
                     scheme.primary.withValues(alpha: 0.05),
                   ],
                 ),
-                border: Border.all(color: scheme.primary.withValues(alpha: 0.3)),
+                border: Border.all(
+                  color: scheme.primary.withValues(alpha: 0.3),
+                ),
               ),
               child: Text(
                 '🌱 Tap "Add Plant" to get started',

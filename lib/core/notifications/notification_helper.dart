@@ -33,10 +33,7 @@ Future<void> createPlantReminderNotification({
           ? '$plantName needs water now.'
           : '$plantName is ready for plant food.',
       notificationLayout: NotificationLayout.Default,
-      payload: <String, String>{
-        'plantId': plantId,
-        'reminderType': type.name,
-      },
+      payload: <String, String>{'plantId': plantId, 'reminderType': type.name},
     ),
     actionButtons: [
       NotificationActionButton(key: 'MARK_DONE', label: 'Mark Done'),

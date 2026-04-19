@@ -105,5 +105,3 @@ class _PlantCardState extends State<PlantCard>
     );
   }
 }
-
-

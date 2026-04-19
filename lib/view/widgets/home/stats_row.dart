@@ -12,21 +12,48 @@ class StatsRow extends StatelessWidget {
     final int total = plantVm.plants.length;
     final int needWater = plantVm.plants.where((p) => p.needsWaterNow).length;
     final int needFood = plantVm.plants.where((p) => p.needsFoodNow).length;
-    final int happy = total -
-        plantVm.plants
-            .where((p) => p.needsWaterNow || p.needsFoodNow)
-            .length;
+    final int happy =
+        total -
+        plantVm.plants.where((p) => p.needsWaterNow || p.needsFoodNow).length;
     final Color primary = Theme.of(context).colorScheme.primary;
 
     return Row(
       children: <Widget>[
-        Expanded(child: _StatCard(value: '$total', label: 'Total', icon: Icons.local_florist_outlined, color: primary)),
+        Expanded(
+          child: _StatCard(
+            value: '$total',
+            label: 'Total',
+            icon: Icons.local_florist_outlined,
+            color: primary,
+          ),
+        ),
         const SizedBox(width: 10),
-        Expanded(child: _StatCard(value: '$happy', label: 'Healthy', icon: Icons.favorite_outline_rounded, color: Colors.green)),
+        Expanded(
+          child: _StatCard(
+            value: '$happy',
+            label: 'Healthy',
+            icon: Icons.favorite_outline_rounded,
+            color: Colors.green,
+          ),
+        ),
         const SizedBox(width: 10),
-        Expanded(child: _StatCard(value: '$needWater', label: 'Water', icon: Icons.water_drop_outlined, color: Colors.blue)),
+        Expanded(
+          child: _StatCard(
+            value: '$needWater',
+            label: 'Water',
+            icon: Icons.water_drop_outlined,
+            color: Colors.blue,
+          ),
+        ),
         const SizedBox(width: 10),
-        Expanded(child: _StatCard(value: '$needFood', label: 'Feed', icon: Icons.grass_outlined, color: Colors.orange)),
+        Expanded(
+          child: _StatCard(
+            value: '$needFood',
+            label: 'Feed',
+            icon: Icons.grass_outlined,
+            color: Colors.orange,
+          ),
+        ),
       ],
     );
   }
@@ -84,4 +111,3 @@ class _StatCard extends StatelessWidget {
     );
   }
 }
-

@@ -21,15 +21,21 @@ class _EditScheduleDialogState extends State<EditScheduleDialog> {
   @override
   void initState() {
     super.initState();
-    _waterIntervalCtrl = TextEditingController(text: widget.plant.waterIntervalDays.toString());
-    _feedIntervalCtrl = TextEditingController(text: widget.plant.feedIntervalDays.toString());
+    _waterIntervalCtrl = TextEditingController(
+      text: widget.plant.waterIntervalDays.toString(),
+    );
+    _feedIntervalCtrl = TextEditingController(
+      text: widget.plant.feedIntervalDays.toString(),
+    );
     _waterTime = widget.plant.waterReminderTime;
     _feedTime = widget.plant.feedReminderTime;
   }
 
   Future<void> _save() async {
-    final int waterInterval = int.tryParse(_waterIntervalCtrl.text) ?? widget.plant.waterIntervalDays;
-    final int feedInterval = int.tryParse(_feedIntervalCtrl.text) ?? widget.plant.feedIntervalDays;
+    final int waterInterval =
+        int.tryParse(_waterIntervalCtrl.text) ?? widget.plant.waterIntervalDays;
+    final int feedInterval =
+        int.tryParse(_feedIntervalCtrl.text) ?? widget.plant.feedIntervalDays;
 
     widget.plant.waterIntervalDays = waterInterval;
     widget.plant.feedIntervalDays = feedInterval;
@@ -52,14 +58,25 @@ class _EditScheduleDialogState extends State<EditScheduleDialog> {
             const SizedBox(height: 12),
             _buildIntervalField('Feeding Interval (Days)', _feedIntervalCtrl),
             const Divider(height: 32),
-            _buildTimeTile('Watering Time', _waterTime, (t) => setState(() => _waterTime = t)),
+            _buildTimeTile(
+              'Watering Time',
+              _waterTime,
+              (t) => setState(() => _waterTime = t),
+            ),
             const SizedBox(height: 8),
-            _buildTimeTile('Feeding Time', _feedTime, (t) => setState(() => _feedTime = t)),
+            _buildTimeTile(
+              'Feeding Time',
+              _feedTime,
+              (t) => setState(() => _feedTime = t),
+            ),
           ],
         ),
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Cancel'),
+        ),
         ElevatedButton(onPressed: _save, child: const Text('Save Changes')),
       ],
     );
@@ -74,13 +91,20 @@ class _EditScheduleDialogState extends State<EditScheduleDialog> {
     );
   }
 
-  Widget _buildTimeTile(String label, TimeOfDay time, Function(TimeOfDay) onPick) {
+  Widget _buildTimeTile(
+    String label,
+    TimeOfDay time,
+    Function(TimeOfDay) onPick,
+  ) {
     return ListTile(
       title: Text(label),
       subtitle: Text(time.format(context)),
       trailing: const Icon(Icons.access_time),
       onTap: () async {
-        final TimeOfDay? picked = await showTimePicker(context: context, initialTime: time);
+        final TimeOfDay? picked = await showTimePicker(
+          context: context,
+          initialTime: time,
+        );
         if (picked != null) onPick(picked);
       },
     );

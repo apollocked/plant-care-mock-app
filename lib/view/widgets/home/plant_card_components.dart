@@ -43,7 +43,10 @@ class CardHeader extends StatelessWidget {
                 color: healthColor.withValues(alpha: 0.12),
               ),
               padding: const EdgeInsets.all(6),
-              child: Image.asset('assets/icons/plant_icon.png', fit: BoxFit.contain),
+              child: Image.asset(
+                'assets/icons/plant_icon.png',
+                fit: BoxFit.contain,
+              ),
             ),
           ],
         ),
@@ -84,7 +87,10 @@ class CardHeader extends StatelessWidget {
               Container(
                 width: 6,
                 height: 6,
-                decoration: BoxDecoration(shape: BoxShape.circle, color: healthColor),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: healthColor,
+                ),
               ),
               const SizedBox(width: 5),
               Text(
@@ -158,5 +164,3 @@ class CardActions extends StatelessWidget {
     );
   }
 }
-
-

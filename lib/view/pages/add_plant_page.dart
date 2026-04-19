@@ -46,20 +46,34 @@ class _AddPlantPageState extends State<AddPlantPage> {
   Future<void> _savePlant() async {
     if (!_formKey.currentState!.validate()) return;
     setState(() => _isSaving = true);
-    final PlantModel plant = PlantModel(
-      id: DateTime.now().microsecondsSinceEpoch.toString(),
-      name: _nameCtrl.text.trim(),
-      species: _speciesCtrl.text.trim().isEmpty ? null : _speciesCtrl.text.trim(),
-      waterIntervalDays: int.parse(_waterDaysCtrl.text),
-      feedIntervalDays: int.parse(_feedDaysCtrl.text),
-      waterReminderHour: _waterTime.hour,
-      waterReminderMinute: _waterTime.minute,
-      feedReminderHour: _feedTime.hour,
-      feedReminderMinute: _feedTime.minute,
-      remindersEnabled: _remindersEnabled,
-    );
-    await context.read<PlantViewModel>().addPlant(plant);
-    if (mounted) Navigator.of(context).pop();
+    
+    try {
+      final PlantModel plant = PlantModel(
+        id: DateTime.now().microsecondsSinceEpoch.toString(),
+        name: _nameCtrl.text.trim(),
+        species: _speciesCtrl.text.trim().isEmpty
+            ? null
+            : _speciesCtrl.text.trim(),
+        waterIntervalDays: int.parse(_waterDaysCtrl.text),
+        feedIntervalDays: int.parse(_feedDaysCtrl.text),
+        waterReminderHour: _waterTime.hour,
+        waterReminderMinute: _waterTime.minute,
+        feedReminderHour: _feedTime.hour,
+        feedReminderMinute: _feedTime.minute,
+        remindersEnabled: _remindersEnabled,
+      );
+      
+      await context.read<PlantViewModel>().addPlant(plant);
+      if (mounted) Navigator.of(context).pop();
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to save plant: $e')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isSaving = false);
+    }
   }
 
   @override
@@ -78,8 +92,14 @@ class _AddPlantPageState extends State<AddPlantPage> {
           children: <Widget>[
             Image.asset('assets/icons/plant_icon.png', width: 28, height: 28),
             const SizedBox(width: 10),
-            Text('Add New Plant',
-                style: TextStyle(color: onSurface, fontWeight: FontWeight.w700, fontSize: 17)),
+            Text(
+              'Add New Plant',
+              style: TextStyle(
+                color: onSurface,
+                fontWeight: FontWeight.w700,
+                fontSize: 17,
+              ),
+            ),
           ],
         ),
       ),
@@ -120,7 +140,8 @@ class _AddPlantPageState extends State<AddPlantPage> {
                     remindersEnabled: _remindersEnabled,
                     waterTime: _waterTime,
                     feedTime: _feedTime,
-                    onToggleReminders: (bool v) => setState(() => _remindersEnabled = v),
+                    onToggleReminders: (bool v) =>
+                        setState(() => _remindersEnabled = v),
                     onPickWaterTime: () => _pickTime(water: true),
                     onPickFeedTime: () => _pickTime(water: false),
                     onSurface: onSurface,
@@ -153,18 +174,28 @@ class _AddPlantPageState extends State<AddPlantPage> {
                             ? const SizedBox(
                                 width: 22,
                                 height: 22,
-                                child: CircularProgressIndicator(strokeWidth: 2.5, color: Colors.white),
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2.5,
+                                  color: Colors.white,
+                                ),
                               )
                             : const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Icon(Icons.local_florist_outlined, color: Colors.white, size: 20),
+                                  Icon(
+                                    Icons.local_florist_outlined,
+                                    color: Colors.white,
+                                    size: 20,
+                                  ),
                                   SizedBox(width: 10),
-                                  Text('Save Plant',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 16)),
+                                  Text(
+                                    'Save Plant',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16,
+                                    ),
+                                  ),
                                 ],
                               ),
                       ),
@@ -179,4 +210,3 @@ class _AddPlantPageState extends State<AddPlantPage> {
     );
   }
 }
-

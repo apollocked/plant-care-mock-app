@@ -27,9 +27,22 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text('PlantCare', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: onSurface)),
-              Text('Your green dashboard',
-                  style: TextStyle(fontSize: 11, color: onSurface.withValues(alpha: 0.5), fontWeight: FontWeight.w400)),
+              Text(
+                'PlantCare',
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w700,
+                  color: onSurface,
+                ),
+              ),
+              Text(
+                'Your green dashboard',
+                style: TextStyle(
+                  fontSize: 11,
+                  color: onSurface.withValues(alpha: 0.5),
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
             ],
           ),
         ],
@@ -42,10 +55,15 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: isDark ? Colors.white.withValues(alpha: 0.1) : Colors.black.withValues(alpha: 0.06),
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.1)
+                  : Colors.black.withValues(alpha: 0.06),
             ),
-            child: Icon(isDark ? Icons.light_mode_outlined : Icons.dark_mode_outlined,
-                size: 20, color: onSurface.withValues(alpha: 0.8)),
+            child: Icon(
+              isDark ? Icons.light_mode_outlined : Icons.dark_mode_outlined,
+              size: 20,
+              color: onSurface.withValues(alpha: 0.8),
+            ),
           ),
         ),
       ],
@@ -71,14 +89,29 @@ class SectionHeader extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 20, 16, 8),
       child: Row(
         children: <Widget>[
-          Text('My Plants', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: onSurface)),
+          Text(
+            'My Plants',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              color: onSurface,
+            ),
+          ),
           const SizedBox(width: 8),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
             decoration: BoxDecoration(
-                color: scheme.primary.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(12)),
-            child: Text('$count',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: scheme.primary)),
+              color: scheme.primary.withValues(alpha: 0.15),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Text(
+              '$count',
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: scheme.primary,
+              ),
+            ),
           ),
         ],
       ),

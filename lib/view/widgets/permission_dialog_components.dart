@@ -18,7 +18,10 @@ class PlantIconCircle extends StatelessWidget {
             scheme.primary.withValues(alpha: 0.04),
           ],
         ),
-        border: Border.all(color: scheme.primary.withValues(alpha: 0.25), width: 1.5),
+        border: Border.all(
+          color: scheme.primary.withValues(alpha: 0.25),
+          width: 1.5,
+        ),
       ),
       padding: const EdgeInsets.all(18),
       child: Image.asset('assets/icons/plant_icon.png', fit: BoxFit.contain),
@@ -35,18 +38,38 @@ class FeaturePillsRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        _Pill(icon: Icons.water_drop_outlined, label: 'Water', color: Colors.blue, isDark: isDark),
+        _Pill(
+          icon: Icons.water_drop_outlined,
+          label: 'Water',
+          color: Colors.blue,
+          isDark: isDark,
+        ),
         const SizedBox(width: 8),
-        _Pill(icon: Icons.grass_outlined, label: 'Feed', color: Colors.green, isDark: isDark),
+        _Pill(
+          icon: Icons.grass_outlined,
+          label: 'Feed',
+          color: Colors.green,
+          isDark: isDark,
+        ),
         const SizedBox(width: 8),
-        _Pill(icon: Icons.wb_sunny_outlined, label: 'Light', color: Colors.orange, isDark: isDark),
+        _Pill(
+          icon: Icons.wb_sunny_outlined,
+          label: 'Light',
+          color: Colors.orange,
+          isDark: isDark,
+        ),
       ],
     );
   }
 }
 
 class _Pill extends StatelessWidget {
-  const _Pill({required this.icon, required this.label, required this.color, required this.isDark});
+  const _Pill({
+    required this.icon,
+    required this.label,
+    required this.color,
+    required this.isDark,
+  });
   final IconData icon;
   final String label;
   final Color color;
@@ -66,7 +89,14 @@ class _Pill extends StatelessWidget {
         children: <Widget>[
           Icon(icon, size: 14, color: color),
           const SizedBox(width: 4),
-          Text(label, style: TextStyle(fontSize: 12, color: color, fontWeight: FontWeight.w500)),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              color: color,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ],
       ),
     );
@@ -85,10 +115,17 @@ class AllowButton extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           gradient: LinearGradient(
-            colors: <Color>[scheme.primary, Color.lerp(scheme.primary, Colors.teal, 0.5)!],
+            colors: <Color>[
+              scheme.primary,
+              Color.lerp(scheme.primary, Colors.teal, 0.5)!,
+            ],
           ),
           boxShadow: <BoxShadow>[
-            BoxShadow(color: scheme.primary.withValues(alpha: 0.38), blurRadius: 16, offset: const Offset(0, 6)),
+            BoxShadow(
+              color: scheme.primary.withValues(alpha: 0.38),
+              blurRadius: 16,
+              offset: const Offset(0, 6),
+            ),
           ],
         ),
         child: ElevatedButton(
@@ -97,7 +134,9 @@ class AllowButton extends StatelessWidget {
             shadowColor: Colors.transparent,
             foregroundColor: Colors.white,
             padding: const EdgeInsets.symmetric(vertical: 15),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
           ),
           onPressed: () {
             Navigator.of(context).pop();
@@ -108,7 +147,10 @@ class AllowButton extends StatelessWidget {
             children: <Widget>[
               Icon(Icons.notifications_active_outlined, size: 20),
               SizedBox(width: 8),
-              Text('Allow Notifications', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+              Text(
+                'Allow Notifications',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
             ],
           ),
         ),
@@ -118,7 +160,11 @@ class AllowButton extends StatelessWidget {
 }
 
 class LaterButton extends StatelessWidget {
-  const LaterButton({super.key, required this.subtextColor, required this.isDark});
+  const LaterButton({
+    super.key,
+    required this.subtextColor,
+    required this.isDark,
+  });
   final Color subtextColor;
   final bool isDark;
 
@@ -137,7 +183,11 @@ class LaterButton extends StatelessWidget {
         onPressed: () => Navigator.of(context).pop(),
         child: Text(
           'Maybe Later',
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: subtextColor),
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            color: subtextColor,
+          ),
         ),
       ),
     );

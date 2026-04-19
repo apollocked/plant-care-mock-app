@@ -2,8 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-/// Light mode  → clean white card with subtle shadow (readable, modern)
-/// Dark mode   → frosted-glass blur effect (premium look)
+
 class GlassContainer extends StatelessWidget {
   const GlassContainer({
     super.key,
@@ -19,13 +18,23 @@ class GlassContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isDark = Theme.of(context).brightness == Brightness.dark;
-    return isDark ? _DarkGlass(borderRadius: borderRadius, padding: padding, child: child) : _LightCard(borderRadius: borderRadius, padding: padding, child: child);
+    return isDark
+        ? _DarkGlass(borderRadius: borderRadius, padding: padding, child: child)
+        : _LightCard(
+            borderRadius: borderRadius,
+            padding: padding,
+            child: child,
+          );
   }
 }
 
-/// Dark: frosted glass with blur
+
 class _DarkGlass extends StatelessWidget {
-  const _DarkGlass({required this.borderRadius, this.padding, required this.child});
+  const _DarkGlass({
+    required this.borderRadius,
+    this.padding,
+    required this.child,
+  });
 
   final double borderRadius;
   final EdgeInsetsGeometry? padding;
@@ -68,9 +77,13 @@ class _DarkGlass extends StatelessWidget {
   }
 }
 
-/// Light: solid white card with green-tinted shadow
+
 class _LightCard extends StatelessWidget {
-  const _LightCard({required this.borderRadius, this.padding, required this.child});
+  const _LightCard({
+    required this.borderRadius,
+    this.padding,
+    required this.child,
+  });
 
   final double borderRadius;
   final EdgeInsetsGeometry? padding;

@@ -37,10 +37,7 @@ class PlantHeroCard extends StatelessWidget {
       padding: const EdgeInsets.all(18),
       child: Row(
         children: <Widget>[
-          _HealthRing(
-            healthScore: _healthScore(),
-            healthColor: _healthColor(),
-          ),
+          _HealthRing(healthScore: _healthScore(), healthColor: _healthColor()),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
@@ -48,12 +45,21 @@ class PlantHeroCard extends StatelessWidget {
               children: <Widget>[
                 Text(
                   plant.name,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: onSurface),
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800,
+                    color: onSurface,
+                  ),
                 ),
                 const SizedBox(height: 3),
                 Text(
-                  plant.species?.isNotEmpty == true ? plant.species! : 'Unknown species',
-                  style: TextStyle(fontSize: 13, color: onSurface.withValues(alpha: 0.6)),
+                  plant.species?.isNotEmpty == true
+                      ? plant.species!
+                      : 'Unknown species',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: onSurface.withValues(alpha: 0.6),
+                  ),
                 ),
                 const SizedBox(height: 10),
                 Wrap(
@@ -62,7 +68,9 @@ class PlantHeroCard extends StatelessWidget {
                   children: <Widget>[
                     StatusPill(label: _healthLabel(), color: _healthColor()),
                     StatusPill(
-                      label: plant.remindersEnabled ? '🔔 Reminders on' : '🔕 Off',
+                      label: plant.remindersEnabled
+                          ? '🔔 Reminders on'
+                          : '🔕 Off',
                       color: scheme.primary,
                     ),
                   ],
@@ -105,7 +113,10 @@ class _HealthRing extends StatelessWidget {
             color: healthColor.withValues(alpha: 0.1),
           ),
           padding: const EdgeInsets.all(10),
-          child: Image.asset('assets/icons/plant_icon.png', fit: BoxFit.contain),
+          child: Image.asset(
+            'assets/icons/plant_icon.png',
+            fit: BoxFit.contain,
+          ),
         ),
       ],
     );
@@ -129,7 +140,11 @@ class StatusPill extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: color),
+        style: TextStyle(
+          fontSize: 11,
+          fontWeight: FontWeight.w600,
+          color: color,
+        ),
       ),
     );
   }

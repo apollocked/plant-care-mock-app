@@ -32,7 +32,10 @@ class _PermissionDialog extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(28),
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: isDark ? 24 : 0, sigmaY: isDark ? 24 : 0),
+          filter: ImageFilter.blur(
+            sigmaX: isDark ? 24 : 0,
+            sigmaY: isDark ? 24 : 0,
+          ),
           child: Container(
             decoration: BoxDecoration(
               color: bg,
@@ -71,7 +74,11 @@ class _PermissionDialog extends StatelessWidget {
                 Text(
                   'Enable notifications so we can remind you when your plants need watering or fertilizing.',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 14, color: subtextColor, height: 1.5),
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: subtextColor,
+                    height: 1.5,
+                  ),
                 ),
                 const SizedBox(height: 16),
                 FeaturePillsRow(isDark: isDark),
@@ -87,4 +94,3 @@ class _PermissionDialog extends StatelessWidget {
     );
   }
 }
-

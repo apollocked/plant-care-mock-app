@@ -52,7 +52,7 @@ class AppWidget extends StatelessWidget {
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           themeMode: themeVm.themeMode,
-          title: 'My Plant',
+          title: 'Plant Care',
           home: const HomePage(),
         );
       },

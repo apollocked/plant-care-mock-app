@@ -34,7 +34,8 @@ class ScheduleTab extends StatelessWidget {
                 icon: Icons.water_drop_outlined,
                 color: Colors.blue,
                 label: 'Watering',
-                value: 'Every ${plant.waterIntervalDays} day${plant.waterIntervalDays > 1 ? 's' : ''}',
+                value:
+                    'Every ${plant.waterIntervalDays} day${plant.waterIntervalDays > 1 ? 's' : ''}',
                 onSurface: onSurface,
               ),
               const Divider(height: 20),
@@ -42,7 +43,8 @@ class ScheduleTab extends StatelessWidget {
                 icon: Icons.grass_outlined,
                 color: Colors.orange,
                 label: 'Feeding',
-                value: 'Every ${plant.feedIntervalDays} day${plant.feedIntervalDays > 1 ? 's' : ''}',
+                value:
+                    'Every ${plant.feedIntervalDays} day${plant.feedIntervalDays > 1 ? 's' : ''}',
                 onSurface: onSurface,
               ),
             ],
@@ -134,10 +136,21 @@ class _EditableScheduleCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(title, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: onSurface)),
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                  color: onSurface,
+                ),
+              ),
               IconButton(
                 onPressed: onEdit,
-                icon: Icon(Icons.edit_outlined, size: 18, color: onSurface.withValues(alpha: 0.5)),
+                icon: Icon(
+                  Icons.edit_outlined,
+                  size: 18,
+                  color: onSurface.withValues(alpha: 0.5),
+                ),
                 constraints: const BoxConstraints(),
                 padding: EdgeInsets.zero,
               ),
@@ -170,7 +183,14 @@ class _ScheduleInfoCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(title, style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: onSurface)),
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w700,
+              color: onSurface,
+            ),
+          ),
           const SizedBox(height: 14),
           ...children,
         ],
@@ -178,4 +198,3 @@ class _ScheduleInfoCard extends StatelessWidget {
     );
   }
 }
-

@@ -75,11 +75,15 @@ class PlantViewModel extends ChangeNotifier {
   }
 
   Future<void> _reschedulePlant(PlantModel plant) async {
-    await _notificationService.cancelPlantReminders(plant.id);
-    if (!plant.remindersEnabled) {
-      return;
+    try {
+      await _notificationService.cancelPlantReminders(plant.id);
+      if (!plant.remindersEnabled) {
+        return;
+      }
+      await _notificationService.scheduleDailyWaterReminder(plant);
+      await _notificationService.scheduleDailyFeedReminder(plant);
+    } catch (e) {
+      debugPrint('Failed to reschedule plant reminders: $e');
     }
-    await _notificationService.scheduleDailyWaterReminder(plant);
-    await _notificationService.scheduleDailyFeedReminder(plant);
   }
 }

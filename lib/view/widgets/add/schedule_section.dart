@@ -24,7 +24,11 @@ class CareScheduleSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          FormSectionHeader(icon: '📅', label: 'Care Schedule', onSurface: onSurface),
+          FormSectionHeader(
+            icon: '📅',
+            label: 'Care Schedule',
+            onSurface: onSurface,
+          ),
           const SizedBox(height: 16),
           Row(
             children: <Widget>[
@@ -32,12 +36,18 @@ class CareScheduleSection extends StatelessWidget {
                 child: TextFormField(
                   controller: waterDaysCtrl,
                   keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
                   style: TextStyle(color: onSurface),
                   decoration: InputDecoration(
                     labelText: 'Water every',
                     suffixText: 'days',
-                    prefixIcon: Icon(Icons.water_drop_outlined, color: Colors.blue.shade400, size: 20),
+                    prefixIcon: Icon(
+                      Icons.water_drop_outlined,
+                      color: Colors.blue.shade400,
+                      size: 20,
+                    ),
                   ),
                   validator: validatePositiveInt,
                 ),
@@ -47,12 +57,18 @@ class CareScheduleSection extends StatelessWidget {
                 child: TextFormField(
                   controller: feedDaysCtrl,
                   keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
                   style: TextStyle(color: onSurface),
                   decoration: InputDecoration(
                     labelText: 'Feed every',
                     suffixText: 'days',
-                    prefixIcon: Icon(Icons.grass_outlined, color: Colors.green.shade600, size: 20),
+                    prefixIcon: Icon(
+                      Icons.grass_outlined,
+                      color: Colors.green.shade600,
+                      size: 20,
+                    ),
                   ),
                   validator: validatePositiveInt,
                 ),
@@ -86,16 +102,34 @@ class _ScheduleTips extends StatelessWidget {
         children: <Widget>[
           Row(
             children: <Widget>[
-              Icon(Icons.lightbulb_outline_rounded, size: 14, color: scheme.primary),
+              Icon(
+                Icons.lightbulb_outline_rounded,
+                size: 14,
+                color: scheme.primary,
+              ),
               const SizedBox(width: 6),
-              Text('Common Care Tips',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: scheme.primary)),
+              Text(
+                'Common Care Tips',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                  color: scheme.primary,
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 8),
-          _TipRow(icon: '💧', text: 'Water: 2-3 days for succulents, 5-7 for tropicals.', onSurface: onSurface),
+          _TipRow(
+            icon: '💧',
+            text: 'Water: 2-3 days for succulents, 5-7 for tropicals.',
+            onSurface: onSurface,
+          ),
           const SizedBox(height: 4),
-          _TipRow(icon: '🧪', text: 'Feed: 7-14 days during growing season, rare in winter.', onSurface: onSurface),
+          _TipRow(
+            icon: '🧪',
+            text: 'Feed: 7-14 days during growing season, rare in winter.',
+            onSurface: onSurface,
+          ),
         ],
       ),
     );
@@ -103,7 +137,11 @@ class _ScheduleTips extends StatelessWidget {
 }
 
 class _TipRow extends StatelessWidget {
-  const _TipRow({required this.icon, required this.text, required this.onSurface});
+  const _TipRow({
+    required this.icon,
+    required this.text,
+    required this.onSurface,
+  });
   final String icon;
   final String text;
   final Color onSurface;
@@ -115,8 +153,14 @@ class _TipRow extends StatelessWidget {
         Text(icon, style: const TextStyle(fontSize: 10)),
         const SizedBox(width: 6),
         Expanded(
-          child: Text(text,
-              style: TextStyle(fontSize: 10, color: onSurface.withValues(alpha: 0.7), fontWeight: FontWeight.w400)),
+          child: Text(
+            text,
+            style: TextStyle(
+              fontSize: 10,
+              color: onSurface.withValues(alpha: 0.7),
+              fontWeight: FontWeight.w400,
+            ),
+          ),
         ),
       ],
     );

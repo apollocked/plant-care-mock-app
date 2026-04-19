@@ -7,7 +7,6 @@ import 'package:mock_plant_care_app/view/widgets/details/schedule_tab.dart';
 import 'package:mock_plant_care_app/viewmodel/plant_viewmodel.dart';
 import 'package:provider/provider.dart';
 
-
 class PlantDetailsPage extends StatefulWidget {
   const PlantDetailsPage({super.key, required this.plantId});
   final String plantId;
@@ -87,31 +86,60 @@ class _PlantDetailsPageState extends State<PlantDetailsPage>
           ),
         ),
       ),
-      bottomNavigationBar: DetailsActionBar(plant: plant, vm: vm, isDark: isDark),
+      bottomNavigationBar: DetailsActionBar(
+        plant: plant,
+        vm: vm,
+        isDark: isDark,
+      ),
     );
   }
 
-  PreferredSizeWidget _buildAppBar(BuildContext context, PlantModel plant, PlantViewModel vm, bool isDark, Color onSurface) {
+  PreferredSizeWidget _buildAppBar(
+    BuildContext context,
+    PlantModel plant,
+    PlantViewModel vm,
+    bool isDark,
+    Color onSurface,
+  ) {
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
       iconTheme: IconThemeData(color: onSurface),
-      title: Text(plant.name, style: TextStyle(color: onSurface, fontWeight: FontWeight.w700, fontSize: 18)),
+      title: Text(
+        plant.name,
+        style: TextStyle(
+          color: onSurface,
+          fontWeight: FontWeight.w700,
+          fontSize: 18,
+        ),
+      ),
       actions: <Widget>[
         GestureDetector(
           onTap: () => _confirmDelete(context, plant, vm),
           child: Container(
             margin: const EdgeInsets.only(right: 16),
             padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.red.withValues(alpha: isDark ? 0.15 : 0.08)),
-            child: Icon(Icons.delete_outline_rounded, size: 20, color: Colors.red.shade400),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.red.withValues(alpha: isDark ? 0.15 : 0.08),
+            ),
+            child: Icon(
+              Icons.delete_outline_rounded,
+              size: 20,
+              color: Colors.red.shade400,
+            ),
           ),
         ),
       ],
     );
   }
 
-  Widget _buildTabBar(BuildContext context, ColorScheme scheme, bool isDark, Color onSurface) {
+  Widget _buildTabBar(
+    BuildContext context,
+    ColorScheme scheme,
+    bool isDark,
+    Color onSurface,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: ClipRRect(
@@ -119,7 +147,9 @@ class _PlantDetailsPageState extends State<PlantDetailsPage>
         child: Container(
           padding: const EdgeInsets.all(6),
           height: 54,
-          color: isDark ? Colors.white.withValues(alpha: 0.08) : Colors.white.withValues(alpha: 0.6),
+          color: isDark
+              ? Colors.white.withValues(alpha: 0.08)
+              : Colors.white.withValues(alpha: 0.6),
           child: TabBar(
             controller: _tabController,
             dividerColor: Colors.transparent,
@@ -142,8 +172,14 @@ class _PlantDetailsPageState extends State<PlantDetailsPage>
             ),
             labelColor: Colors.white,
             unselectedLabelColor: onSurface.withValues(alpha: 0.45),
-            labelStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
-            unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+            labelStyle: const TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 14,
+            ),
+            unselectedLabelStyle: const TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 13,
+            ),
             tabs: const <Tab>[
               Tab(text: '🌿 Care Info'),
               Tab(text: '📋 Schedule'),
@@ -154,17 +190,33 @@ class _PlantDetailsPageState extends State<PlantDetailsPage>
     );
   }
 
-  void _confirmDelete(BuildContext context, PlantModel plant, PlantViewModel vm) {
+  void _confirmDelete(
+    BuildContext context,
+    PlantModel plant,
+    PlantViewModel vm,
+  ) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: const Text('Remove Plant', style: TextStyle(fontWeight: FontWeight.w700)),
+        title: const Text(
+          'Remove Plant',
+          style: TextStyle(fontWeight: FontWeight.w700),
+        ),
         content: Text('Remove "${plant.name}" from your garden?'),
         actions: <Widget>[
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Cancel'),
+          ),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.white, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
             onPressed: () async {
               Navigator.pop(ctx);
               await vm.deletePlant(plant.id);
@@ -177,4 +229,3 @@ class _PlantDetailsPageState extends State<PlantDetailsPage>
     );
   }
 }
-

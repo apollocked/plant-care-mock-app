@@ -22,7 +22,11 @@ class PlantIdentitySection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          FormSectionHeader(icon: '🌱', label: 'Plant Identity', onSurface: onSurface),
+          FormSectionHeader(
+            icon: '🌱',
+            label: 'Plant Identity',
+            onSurface: onSurface,
+          ),
           const SizedBox(height: 16),
           TextFormField(
             controller: nameCtrl,
@@ -32,7 +36,8 @@ class PlantIdentitySection extends StatelessWidget {
               hintText: 'e.g. My Fiddle Leaf',
               prefixIcon: Icon(Icons.badge_outlined, size: 20),
             ),
-            validator: (String? v) => (v == null || v.trim().isEmpty) ? 'Please enter a name' : null,
+            validator: (String? v) =>
+                (v == null || v.trim().isEmpty) ? 'Please enter a name' : null,
           ),
           const SizedBox(height: 12),
           TextFormField(

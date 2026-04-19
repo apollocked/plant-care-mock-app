@@ -1,0 +1,5 @@
+Analyzing mock_plant_care_app...                                
+
+   info - Statements in an if should be enclosed in a block - lib\view\widgets\details\action_bar.dart:56:19 - curly_braces_in_flow_control_structures
+   info - Statements in an if should be enclosed in a block - lib\view\widgets\details\action_bar.dart:70:19 - curly_braces_in_flow_control_structures
+
