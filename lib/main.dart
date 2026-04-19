@@ -13,12 +13,10 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   final StorageService storageService = StorageService();
   final NotificationService notificationService = NotificationService();
   await storageService.init();
   await notificationService.initialize();
-
   final PlantViewModel plantViewModel = PlantViewModel(
     storageService,
     notificationService,
@@ -40,7 +38,6 @@ void main() async {
 
 class AppWidget extends StatelessWidget {
   const AppWidget({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Consumer<ThemeViewModel>(
